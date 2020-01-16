@@ -12,7 +12,8 @@
 
  if ( !class_exists( 'EF_Custom_Status' ) ) {
 
-class EF_Custom_Status extends EF_Module_With_View {
+class EF_Custom_Status extends EF_Module {
+	use EF_Module_With_View;
 
 	var $module;
 
