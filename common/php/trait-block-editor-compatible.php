@@ -68,8 +68,8 @@ trait Block_Editor_Compatible {
 		}
 	}
 
-	function replace_hook( $hook, $callback ) {
-		if ( is_callable( [ $this, $callback ] ) ) {
+	public function replace_hook( $hook, $callback ) {
+		if ( is_callable( array( $this, $callback ) ) ) {
 			remove_action( $hook, array( $this->ef_module, $callback ) );
 			add_action( $hook, array( $this, $callback ) );
 		}

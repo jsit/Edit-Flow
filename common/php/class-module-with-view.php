@@ -22,7 +22,9 @@ trait EF_Module_With_View {
 		$settings_view_slugs = array();
 		// Load all of the modules that have a settings slug/ callback for the settings page
 		foreach ( $edit_flow->modules as $mod_name => $mod_data ) {
-			if ( isset( $mod_data->options->enabled ) && $mod_data->options->enabled == 'on' && $mod_data->configure_page_cb )
+			if ( isset( $mod_data->options->enabled ) 
+				&& 'on' === $mod_data->options->enabled 
+				&& $mod_data->configure_page_cb )
 				$settings_view_slugs[] = $mod_data->settings_slug;
 		}
 
@@ -54,7 +56,7 @@ trait EF_Module_With_View {
 	 *
 	 * @return bool
 	 */
-	function is_active_view( $allowed_pages = array( 'edit.php', 'post.php', 'post-new.php' ) ) {
+	public function is_active_view( $allowed_pages = array( 'edit.php', 'post.php', 'post-new.php' ) ) {
 		return ( $this->is_admin_page( $allowed_pages ) && $this->is_supported_post_type() );
 	}
 

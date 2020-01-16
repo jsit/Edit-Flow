@@ -24,9 +24,9 @@ class EF_Custom_Status extends EF_Module {
 	 *
 	 * @var array
 	 */
-	protected $compat_hooks = [
-		'admin_enqueue_scripts' => [ 'enqueue_admin_styles', 'enqueue_admin_scripts' ]
-	];
+	protected $compat_hooks = array(
+		'admin_enqueue_scripts' => array( 'enqueue_admin_styles', 'enqueue_admin_scripts' )
+	);
 
 	// This is taxonomy name used to store all our custom statuses
 	const taxonomy_key = 'post_status';
@@ -301,7 +301,7 @@ class EF_Custom_Status extends EF_Module {
 	 * - jQuery Sortable plugin is used for drag and dropping custom statuses
 	 * - We have other custom code for Quick Edit and JS niceties
 	 */
-	function enqueue_admin_scripts() {
+	public function enqueue_admin_scripts() {
 	
 		// Load Javascript we need to use on the configuration views (jQuery Sortable and Quick Edit)
 		if ( $this->is_current_module_settings_view() ) {
@@ -324,7 +324,7 @@ class EF_Custom_Status extends EF_Module {
 		}
 	}
 
-	function enqueue_admin_styles() {
+	public function enqueue_admin_styles() {
 		if ( $this->is_custom_status_view() ) {
 			wp_enqueue_style( 'edit_flow-custom_status', $this->module_url . 'lib/custom-status.css', false, EDIT_FLOW_VERSION, 'all' );
 		}
@@ -1765,16 +1765,16 @@ class EF_Custom_Status extends EF_Module {
 	 */
 	public function is_custom_status_view() {
 		
-		if( $this->is_current_module_settings_view() ) {
+		if ( $this->is_current_module_settings_view() ) {
 			return true;
 		}
 
-		if( ! $this->is_active_view( array( 'post.php', 'edit.php', 'post-new.php', 'page.php', 'edit-pages.php', 'page-new.php' ) ) ) {
+		if ( ! $this->is_active_view( array( 'post.php', 'edit.php', 'post-new.php', 'page.php', 'edit-pages.php', 'page-new.php' ) ) ) {
 			return false;
 		}
 
 		$post_type_obj = get_post_type_object( $this->get_current_post_type() );
-		if( $post_type_obj && ! current_user_can( $post_type_obj->cap->edit_posts ) ) {
+		if ( $post_type_obj && ! current_user_can( $post_type_obj->cap->edit_posts ) ) {
 			return false;
 		}
 

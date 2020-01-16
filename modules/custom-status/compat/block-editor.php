@@ -8,7 +8,7 @@ class EF_Custom_Status_Block_Editor_Compat {
 	 *
 	 * @return void
 	 */
-	function enqueue_admin_scripts() {
+	public function enqueue_admin_scripts() {
 		if ( $this->ef_module->disable_custom_statuses_for_post_type() ) {
 			return;
 		}
@@ -25,7 +25,7 @@ class EF_Custom_Status_Block_Editor_Compat {
 		wp_localize_script( 'edit-flow-block-custom-status', 'EditFlowCustomStatuses', $this->get_custom_statuses() );
 	}
 
-	function enqueue_admin_styles() {
+	public function enqueue_admin_styles() {
 		if ( $this->ef_module->disable_custom_statuses_for_post_type() ) {
 			return;
 		}
