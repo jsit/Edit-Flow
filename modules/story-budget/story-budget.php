@@ -188,17 +188,18 @@ class EF_Story_Budget extends EF_Module {
 	 */
 	function handle_form_date_range_change() {
 		
-		if ( !isset( $_POST['ef-story-budget-range-submit'], $_POST['ef-story-budget-number-days'], $_POST['ef-story-budget-start-date_hidden'] ) )
+		if ( ! isset( $_POST['ef-story-budget-range-submit'], $_POST['ef-story-budget-number-days'], $_POST['ef-story-budget-start-date_hidden'] ) ) {
 			return;
+		}
 			
 		if ( !wp_verify_nonce( $_POST['nonce'], 'change-date' ) )
 			wp_die( $this->module->messages['nonce-failed'] );
 		
 		$current_user = wp_get_current_user();
-		$new_filters = [
-			'start_date' =>  $_POST['ef-story-budget-start-date_hidden'],
-			'number_days' => (int)$_POST['ef-story-budget-number-days']
-		];
+		$new_filters = array (
+			'start_date' => $_POST['ef-story-budget-start-date_hidden'],
+			'number_days' => (int) $_POST['ef-story-budget-number-days'],
+		);
 		$user_filters = $this->update_user_filters_from_form_date_range_change( $current_user, $new_filters );
 		
 		$this->update_user_meta( $current_user->ID, self::usermeta_key_prefix . 'filters', $user_filters );
@@ -209,7 +210,7 @@ class EF_Story_Budget extends EF_Module {
 	/**
 	 * Handles updating the users
 	 */
-	function update_user_filters_from_form_date_range_change( $current_user, $new_filters ) {
+	public function update_user_filters_from_form_date_range_change( $current_user, $new_filters ) {
 		$existing_filters = $this->get_user_meta( $current_user->ID, self::usermeta_key_prefix . 'filters', true );
 
 		// Default start date value
@@ -217,7 +218,7 @@ class EF_Story_Budget extends EF_Module {
 			// Validate that it's a legitimate date
 			$valid_date = DateTime::createFromFormat( 'Y-m-d', $new_filters['start_date'] );
 
-			if ( $valid_date === false ) {
+			if ( false === $valid_date ) {
 				$start_date = date_i18n( 'Y-m-d' );
 			} else {
 				$start_date = $valid_date->format( 'Y-m-d' );
@@ -367,7 +368,7 @@ class EF_Story_Budget extends EF_Module {
 				<a class="change-date-cancel hidden" href="#"><?php echo esc_html( __( 'Cancel', 'edit-flow' ) ); ?></a>
 				<a class="change-date" href="#"><?php echo esc_html( __( 'Change', 'edit-flow' ) ); ?></a>
 			</span>
-			<?php echo wp_nonce_field( 'change-date', 'nonce', 'change-date-nonce', false ); ?>
+			<?php wp_nonce_field( 'change-date', 'nonce', 'change-date-nonce', true ); ?>
 		</form>
 		<?php	
 	}
