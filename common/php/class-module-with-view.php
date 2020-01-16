@@ -1,6 +1,6 @@
 <?php
 
-class EF_Module_With_View extends EF_Module {
+trait EF_Module_With_View {
 
 	/**
 	 * Whether or not the current page is an Edit Flow settings view (either main or module)
